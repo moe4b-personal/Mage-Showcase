@@ -68,7 +68,7 @@ public class CharacterMovement : Character.Module
 
     private void Process()
     {
-        if(Character.Attack.IsProcessing)
+        if(Character.Attack.Bool)
         {
 
         }

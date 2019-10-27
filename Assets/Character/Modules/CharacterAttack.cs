@@ -25,21 +25,14 @@ public class CharacterAttack : Character.Module
 
     private void EventCallback(string ID)
     {
-        if (ID == "Attack Connected")
-            AttackConnected();
-    }
-
-    public event Action OnAttackConnected;
-    void AttackConnected()
-    {
-        OnAttackConnected?.Invoke();
+        if (ID == "Attack Connected") Connected();
     }
 
     public bool CanPerform
     {
         get
         {
-            if (IsProcessing) return false;
+            if (Bool) return false;
 
             if (MagicalSpells.Count == 0) return false;
 
@@ -47,41 +40,83 @@ public class CharacterAttack : Character.Module
         }
     }
 
+    public bool Bool
+    {
+        get
+        {
+            return Animator.GetBool("Attack");
+        }
+        set
+        {
+            Animator.SetBool("Attack", value);
+        }
+    }
+
     private void Process()
     {
+        Debug.Log(Progress);
+
         if(Input.Attack.Value)
         {
             if(CanPerform)
             {
-                coroutine = StartCoroutine(Procedure());
+                Bool = true;
             }
         }
     }
 
-    Coroutine coroutine;
-    public bool IsProcessing => coroutine != null;
-    IEnumerator Procedure()
+    public event Action OnConnected;
+    void Connected()
     {
-        Animator.SetTrigger("Attack");
+        Launch();
 
-        yield return new WaitForSeconds(0.5f);
+        IEnumerator Procedure()
+        {
+            while (MagicalSpells.Count > 0)
+            {
+                var timer = 0.75f;
 
-        var instance = MagicalSpells.Take();
+                while(timer > 0f)
+                {
+                    timer = Mathf.MoveTowards(timer, 0f, Time.deltaTime);
 
-        Launch(instance);
+                    if (Input.Attack.Value == false) break;
 
-        coroutine = null;
+                    yield return new WaitForEndOfFrame();
+                }
+
+                if (Input.Attack.Value)
+                    Launch();
+                else
+                    break;
+            }
+
+            yield return new WaitForSeconds(0.5f);
+
+            End();
+        }
+
+        StartCoroutine(Procedure());
+
+        OnConnected?.Invoke();
     }
 
-    void Launch(MagicalSpell spell)
+    public event Action OnEnd;
+    void End()
     {
+        Bool = false;
+
+        OnEnd?.Invoke();
+    }
+
+    void Launch()
+    {
+        var spell = MagicalSpells.Take();
+
         var direction = camera.Forward;
 
         if (camera.RayCast.HasHit)
             direction = (camera.RayCast.Hit.point - spell.transform.position).normalized;
-
-        if (camera.RayCast.HasHit)
-            Debug.DrawRay(spell.transform.position, direction * 40f, Color.green, 10f);
 
         spell.Launch(direction * 20);
     }
