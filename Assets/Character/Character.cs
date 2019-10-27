@@ -93,6 +93,8 @@ public class Character : MonoBehaviour
 
     public CharacterMovement Movement { get; protected set; }
 
+    public CharacterAnimatorAim AnimatorAim { get; protected set; }
+
     public CharacterMagicalSpells MagicalSpells { get; protected set; }
 
     public CharacterAttack Attack { get; protected set; }
@@ -128,6 +130,7 @@ public class Character : MonoBehaviour
         Body = FindProperty<CharacterBody>();
         Movement = FindProperty<CharacterMovement>();
         MagicalSpells = FindProperty<CharacterMagicalSpells>();
+        AnimatorAim = FindObjectOfType<CharacterAnimatorAim>();
         Attack = FindProperty<CharacterAttack>();
 
         void Process(IProperty module) => module.Configure(this);

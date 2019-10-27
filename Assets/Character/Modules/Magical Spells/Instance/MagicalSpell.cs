@@ -15,11 +15,11 @@ public class MagicalSpell : MonoBehaviour
     public class ParticlesData
     {
         [SerializeField]
-        ParticleSystem component;
+        ParticleSystem component = null;
         public ParticleSystem Component => component;
 
         [SerializeField]
-        ParticleSystem[] simulated;
+        ParticleSystem[] simulated = new ParticleSystem[] { };
         public ParticleSystem[] Simulated => simulated;
 
         public void SetSimulation(ParticleSystemSimulationSpace space)
@@ -48,7 +48,7 @@ public class MagicalSpell : MonoBehaviour
     }
 
     [SerializeField]
-    GameObject explosion;
+    GameObject explosion = null;
 
     public Rigidbody rigidbody { get; protected set; }
     public SphereCollider collider { get; protected set; }

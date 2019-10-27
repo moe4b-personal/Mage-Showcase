@@ -7,15 +7,15 @@ using UnityEngine.Animations;
 public class BoneModification : AnimatorStateMachiner.State
 {
     [SerializeField]
-    ElementData[] elements;
+    ElementData[] elements = new ElementData[] { };
     [Serializable]
     public class ElementData
     {
         [SerializeField]
-        HumanBodyBones target;
+        HumanBodyBones target = HumanBodyBones.Hips;
 
         [SerializeField]
-        Vector3 angles;
+        Vector3 angles = Vector3.one;
 
         public void Apply(Animator animator, float weight)
         {
@@ -69,7 +69,7 @@ public class BoneModification : AnimatorStateMachiner.State
 
     void Apply()
     {
-        weight = Mathf.MoveTowards(weight, weightTarget, 1f * Time.deltaTime);
+        weight = Mathf.MoveTowards(weight, weightTarget, speed * Time.deltaTime);
 
         for (int i = 0; i < elements.Length; i++)
         {

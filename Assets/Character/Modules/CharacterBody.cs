@@ -27,4 +27,10 @@ public class CharacterBody : Character.Module
     {
         AnimatorMoveEvent?.Invoke();
     }
+
+    public event Action AnimatorIKEvent;
+    private void OnAnimatorIK(int layerIndex)
+    {
+        AnimatorIKEvent?.Invoke();
+    }
 }

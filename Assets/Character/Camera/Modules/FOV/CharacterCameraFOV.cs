@@ -19,10 +19,7 @@ using Random = UnityEngine.Random;
 
 public class CharacterCameraFOV : CharacterCamera.Module
 {
-    [SerializeField]
-    float speed = 10f;
-
-    public float Anchor { get; protected set; }
+    public float Initial { get; protected set; }
 
     public float Value { get => camera.Component.fieldOfView; set => camera.Component.fieldOfView = value; }
 
@@ -30,7 +27,7 @@ public class CharacterCameraFOV : CharacterCamera.Module
     {
         set
         {
-            Value = Anchor * value;
+            Value = Initial * value;
         }
     }
 
@@ -52,6 +49,6 @@ public class CharacterCameraFOV : CharacterCamera.Module
     {
         base.Init();
 
-        Anchor = Value;
+        Initial = Value;
     }
 }

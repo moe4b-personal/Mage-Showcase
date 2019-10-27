@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterMagicalSpells : Character.Module
 {
     [SerializeField]
-    GameObject prefab;
+    GameObject prefab = null;
 
     public List<MagicalSpell> Elements { get; protected set; }
 

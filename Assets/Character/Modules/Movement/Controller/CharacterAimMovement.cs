@@ -7,22 +7,24 @@ public class CharacterAimMovement : CharacterMovement.Controller
     [SerializeField]
     float acceleration = 5f;
 
+    [SerializeField]
+    [Range(0f, 1f)]
+    float zoom = 0.7f;
+
     public Vector3 Velocity { get; protected set; }
 
-    public CharacterHeadAim HeadAim { get; protected set; }
+    public CharacterAnimatorAim AnimatorAim => Character.AnimatorAim;
 
     protected override void Init()
     {
         base.Init();
 
-        HeadAim = Character.FindProperty<CharacterHeadAim>();
-
-        Character.OnLateProcess += LateProcess;
+        Character.Body.AnimatorIKEvent += AnimatorIKCallback;
     }
 
     protected override void Process()
     {
-        camera.FOV.Zoom.Target = Input.Aim.Value ? 0.8f : 1f;
+        camera.FOV.Zoom.Target = Input.Aim.Value ? zoom : 1f;
 
         if (Input.Aim.Value == false) return;
 
@@ -43,10 +45,10 @@ public class CharacterAimMovement : CharacterMovement.Controller
         ApplyVelocity(Animator.velocity);
     }
 
-    private void LateProcess()
+    private void AnimatorIKCallback()
     {
-        HeadAim.Weight = Input.Aim.Value ? 1f : 0f;
+        AnimatorAim.Weight.Target = Input.Aim.Value ? 1f : 0f;
 
-        HeadAim.Set(camera.Forward);
+        AnimatorAim.Set(camera.Forward);
     }
 }
