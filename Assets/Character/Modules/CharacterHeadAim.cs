@@ -20,30 +20,79 @@ using Random = UnityEngine.Random;
 public class CharacterHeadAim : Character.Module
 {
     [SerializeField]
+    AnimatorWeighedController[] bones = new AnimatorWeighedController[] { };
+
+    [SerializeField]
     float speed = 2f;
 
     [SerializeField]
     Vector3 offset = Vector3.zero;
 
-    public Transform Bone { get; protected set; }
-
-    float _weight;
     public float Weight
+    {
+        set
+        {
+            for (int i = 0; i < bones.Length; i++)
+            {
+                bones[i].Target = value;
+            }
+        }
+    }
+
+    public Quaternion Rotation { get; protected set; }
+
+    protected override void Init()
+    {
+        base.Init();
+
+        for (int i = 0; i < bones.Length; i++)
+        {
+            bones[i].Init(Character.Animator);
+        }
+
+        Character.OnLateProcess += LateProcess;
+    }
+
+    public void Set(Vector3 direction)
+    {
+        Rotation = Quaternion.LookRotation(Character.transform.InverseTransformDirection(direction));
+    }
+
+    private void LateProcess()
+    {
+        for (int i = 0; i < bones.Length; i++)
+        {
+            bones[i].LocalRotation = Quaternion.Lerp(Quaternion.identity, Rotation, 0.333f);
+
+            bones[i].Process();
+        }
+    }
+}
+
+[Serializable]
+public class AnimatorWeighedController
+{
+    [SerializeField]
+    AnimatorBoneController bone;
+    public AnimatorBoneController Bone => bone;
+
+    float _value;
+    public float Value
     {
         get
         {
-            return _weight;
+            return _value;
         }
         set
         {
-            _weight = value;
+            value = Mathf.Clamp01(value);
 
-            UpdateState();
+            _value = value;
         }
     }
 
     float _target;
-    public float WeightTarget
+    public float Target
     {
         get
         {
@@ -57,34 +106,34 @@ public class CharacterHeadAim : Character.Module
         }
     }
 
-    public Quaternion Rotation { get; protected set; }
+    [SerializeField]
+    float speed;
 
-    protected override void Init()
+    public Quaternion LocalRotation { get; set; }
+
+    public virtual void Init(Animator animator)
     {
-        base.Init();
-
-        Bone = Character.Animator.GetBoneTransform(HumanBodyBones.Neck);
-
-        Character.OnLateProcess += LateProcess;
+        bone.Init(animator);
     }
-
-    private void LateProcess()
+    
+    public virtual void Process()
     {
-        Weight = Mathf.MoveTowards(Weight, WeightTarget, speed * Time.deltaTime);
+        Value = Mathf.MoveTowards(Value, Target, speed * Time.deltaTime);
+
+        bone.transform.localRotation = Quaternion.Lerp(bone.transform.localRotation, LocalRotation, this.Value);
     }
+}
 
-    public void Set(Vector3 direction)
-    {
-        Rotation = Quaternion.LookRotation(direction) * Quaternion.Euler(offset);
-    }
+[Serializable]
+public class AnimatorBoneController
+{
+    [SerializeField]
+    HumanBodyBones target;
 
-    void UpdateState()
-    {
-        Set(Rotation);
-    }
+    public Transform transform { get; protected set; }
 
-    void Set(Quaternion rotation)
+    public virtual void Init(Animator animator)
     {
-        Bone.rotation = Quaternion.Lerp(Bone.rotation, rotation, Weight);
+        transform = animator.GetBoneTransform(target);
     }
 }

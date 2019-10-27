@@ -45,7 +45,7 @@ public class CharacterAimMovement : CharacterMovement.Controller
 
     private void LateProcess()
     {
-        HeadAim.WeightTarget = Input.Aim.Value ? 1f : 0f;
+        HeadAim.Weight = Input.Aim.Value ? 1f : 0f;
 
         HeadAim.Set(camera.Forward);
     }

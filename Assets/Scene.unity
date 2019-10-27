@@ -1284,6 +1284,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40b55533c81a98641b86d9f0266dd8bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bones:
+  - bone:
+      target: 9
+    speed: 2
+  - bone:
+      target: 7
+    speed: 2
+  - bone:
+      target: 8
+    speed: 2
   speed: 2
   offset: {x: 0, y: -90, z: -90}
 --- !u!1 &895933438
