@@ -122,7 +122,7 @@ public class Character : MonoBehaviour
             Properties.Add(modules[i]);
 
         camera = FindObjectOfType<CharacterCamera>();
-        Properties.Add(camera);
+        Properties.AddRange(camera.GetAllModules());
 
         Input = FindProperty<CharacterInput>();
         Body = FindProperty<CharacterBody>();

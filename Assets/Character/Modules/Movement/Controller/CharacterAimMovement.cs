@@ -22,6 +22,8 @@ public class CharacterAimMovement : CharacterMovement.Controller
 
     protected override void Process()
     {
+        camera.FOV.Zoom.Target = Input.Aim.Value ? 0.8f : 1f;
+
         if (Input.Aim.Value == false) return;
 
         base.Process();

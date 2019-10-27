@@ -27,13 +27,20 @@ public class CharacterCamera : Character.Module
 
     public CharacterCameraRaycast RayCast { get; protected set; }
 
+    public CharacterCameraFOV FOV { get; protected set; }
+
+    public IList<Character.IProperty> GetAllModules()
+    {
+        return GetComponentsInChildren<Character.IProperty>();
+    }
+
     public override void Configure(Character character)
     {
         base.Configure(character);
 
         RayCast = GetComponentInChildren<CharacterCameraRaycast>();
 
-        Character.Properties.Add(RayCast);
+        FOV = GetComponentInChildren<CharacterCameraFOV>();
     }
 
     protected override void Init()
