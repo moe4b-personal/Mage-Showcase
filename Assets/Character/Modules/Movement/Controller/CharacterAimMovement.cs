@@ -30,15 +30,11 @@ public class CharacterAimMovement : CharacterMovement.Controller
 
         base.Process();
 
-        var target = camera.AlignedForward * Input.Movement.Y.RawValue + camera.Right * Input.Movement.X.RawValue;
-        target = Vector3.ClampMagnitude(target, 1f);
+        var target = CalculateVelocityTarget();
 
         Velocity = Vector3.MoveTowards(Velocity, target, acceleration * Time.deltaTime);
 
-        var localVelocity = Character.transform.InverseTransformDirection(Velocity);
-
-        Animator.SetFloat("Horizontal", localVelocity.x);
-        Animator.SetFloat("Vertical", localVelocity.z);
+        SetAnimatorVelocity(Velocity);
 
         Rotation.Process(camera.AlignedForward, Rotation.Speed * 2f);
 

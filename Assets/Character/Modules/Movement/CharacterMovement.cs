@@ -37,6 +37,25 @@ public class CharacterMovement : Character.Module
             
         }
 
+        protected virtual Vector3 CalculateVelocityTarget()
+        {
+            var target = camera.AlignedForward * Input.Movement.Y.RawValue + camera.Right * Input.Movement.X.RawValue;
+
+            target = Vector3.ClampMagnitude(target, 1f);
+
+            return target;
+        }
+
+        protected virtual void SetAnimatorVelocity(Vector3 velocity)
+        {
+            Animator.SetFloat("Movement", velocity.magnitude + Sprint.Value);
+
+            var localVelocity = Character.transform.InverseTransformDirection(velocity);
+
+            Animator.SetFloat("Horizontal", localVelocity.x);
+            Animator.SetFloat("Vertical", localVelocity.z);
+        }
+
         protected virtual void ApplyVelocity(Vector3 velocity)
         {
             velocity.y = rigidbody.velocity.y;

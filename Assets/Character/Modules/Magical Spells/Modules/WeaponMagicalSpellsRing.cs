@@ -12,9 +12,6 @@ public class WeaponMagicalSpellsRing : CharacterMagicalSpells.Module
     [SerializeField]
     float radius = 0.5f;
 
-    [SerializeField]
-    float speed = 240f;
-
     public List<ElementData> Elements { get; protected set; }
     [Serializable]
     public class ElementData
@@ -35,7 +32,7 @@ public class WeaponMagicalSpellsRing : CharacterMagicalSpells.Module
 
             var target = (Index / 1f / Ring.Elements.Count) * 360f;
 
-            Angle = Mathf.MoveTowardsAngle(Angle, target, Ring.speed / 10f * Time.deltaTime);
+            Angle = Mathf.MoveTowardsAngle(Angle, target, Ring.Rotation.Speed / 10f * Time.deltaTime);
 
             var position = Ring.CalculatePosition(target, Distance);
 
@@ -49,11 +46,20 @@ public class WeaponMagicalSpellsRing : CharacterMagicalSpells.Module
         }
     }
 
+    public class Module : CharacterMagicalSpells.Module
+    {
+        public WeaponMagicalSpellsRing Ring => MagicalSpells.Ring;
+    }
+
+    public WeaponMagicalSpellsRingRotation Rotation { get; protected set; }
+
     public override void Configure(Character character)
     {
         base.Configure(character);
 
         Elements = new List<ElementData>();
+
+        Rotation = Character.FindProperty<WeaponMagicalSpellsRingRotation>();
     }
 
     protected override void Init()
@@ -81,8 +87,6 @@ public class WeaponMagicalSpellsRing : CharacterMagicalSpells.Module
 
     private void Process()
     {
-        transform.Rotate(Vector3.forward * speed * Time.deltaTime, Space.Self);
-
         for (int i = 0; i < Elements.Count; i++)
         {
             var rate = i / 1f / Elements.Count;

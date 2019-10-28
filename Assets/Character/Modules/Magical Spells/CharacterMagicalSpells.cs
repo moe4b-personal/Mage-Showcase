@@ -13,6 +13,9 @@ public class CharacterMagicalSpells : Character.Module
 
     public int Count => Elements.Count;
 
+    public MagicalSpell First => Elements[0];
+    public MagicalSpell Last => Elements[Count - 1];
+
     public class Module : Character.Module
     {
         public CharacterMagicalSpells MagicalSpells { get { return Character.MagicalSpells; } }
@@ -63,7 +66,7 @@ public class CharacterMagicalSpells : Character.Module
 
     public delegate void RemoveDelegate(MagicalSpell spell);
     public event RemoveDelegate OnRemove;
-    void Remove(MagicalSpell spell)
+    public void Remove(MagicalSpell spell)
     {
         if(Elements.Contains(spell) == false)
         {

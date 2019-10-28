@@ -54,14 +54,17 @@ public class CharacterAttack : Character.Module
 
     private void Process()
     {
-        Debug.Log(Progress);
-
         if(Input.Attack.Value)
         {
             if(CanPerform)
             {
                 Bool = true;
             }
+        }
+
+        if(Bool)
+        {
+
         }
     }
 
@@ -101,24 +104,28 @@ public class CharacterAttack : Character.Module
         OnConnected?.Invoke();
     }
 
+    void Launch()
+    {
+        var spell = MagicalSpells.First;
+
+        var element = MagicalSpells.Ring.Elements.Find(x => x.Spell == spell);
+
+        MagicalSpells.Remove(spell);
+
+        var direction = camera.Forward;
+
+        if (camera.RayCast.HasHit)
+            direction = spell.DirectionTo(camera.RayCast.Hit.point);
+
+        spell.Launch(direction * 20);
+    }
+
     public event Action OnEnd;
     void End()
     {
         Bool = false;
 
         OnEnd?.Invoke();
-    }
-
-    void Launch()
-    {
-        var spell = MagicalSpells.Take();
-
-        var direction = camera.Forward;
-
-        if (camera.RayCast.HasHit)
-            direction = (camera.RayCast.Hit.point - spell.transform.position).normalized;
-
-        spell.Launch(direction * 20);
     }
 }
 #pragma warning restore CS0108 // Member hides inherited member; missing new keyword

@@ -79,6 +79,11 @@ public class MagicalSpell : MonoBehaviour
         }
     }
 
+    public Vector3 DirectionTo(Vector3 point)
+    {
+        return (point - transform.position).normalized;
+    }
+
     public void Launch(Vector3 velocity)
     {
         transform.SetParent(null);

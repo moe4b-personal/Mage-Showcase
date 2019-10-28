@@ -15,12 +15,11 @@ public class CharacterStandardMovement : CharacterMovement.Controller
 
         base.Process();
 
-        var target = camera.AlignedForward * Input.Movement.Y.RawValue + camera.Right * Input.Movement.X.RawValue;
-        target = Vector3.ClampMagnitude(target, 1f);
+        var target = CalculateVelocityTarget();
 
         Velocity = Vector3.MoveTowards(Velocity, target, acceleration * Time.deltaTime);
 
-        Animator.SetFloat("Movement", Velocity.magnitude + Sprint.Value);
+        SetAnimatorVelocity(Velocity);
 
         Rotation.Process(Velocity);
 
