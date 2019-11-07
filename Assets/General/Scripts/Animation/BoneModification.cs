@@ -34,8 +34,8 @@ public class BoneModification : AnimatorStateMachiner.State
     int layerIndex;
     public float LayerWeight => Animator.GetLayerWeight(layerIndex);
 
-    public float weight = 0;
-    public float weightTarget = 0f;
+    float weight = 0;
+    float weightTarget = 0f;
 
     public override void Configure(AnimatorStateMachiner reference)
     {
