@@ -7,6 +7,9 @@ using UnityEngine.Animations;
 public class BoneModification : AnimatorStateMachiner.State
 {
     [SerializeField]
+    bool enabled = true;
+
+    [SerializeField]
     ElementData[] elements = new ElementData[] { };
     [Serializable]
     public class ElementData
@@ -31,8 +34,8 @@ public class BoneModification : AnimatorStateMachiner.State
     int layerIndex;
     public float LayerWeight => Animator.GetLayerWeight(layerIndex);
 
-    float weight = 0;
-    float weightTarget = 0f;
+    public float weight = 0;
+    public float weightTarget = 0f;
 
     public override void Configure(AnimatorStateMachiner reference)
     {
@@ -64,7 +67,13 @@ public class BoneModification : AnimatorStateMachiner.State
 
     private void LateUpdate()
     {
-        Apply();
+        if (Input.GetKeyDown(KeyCode.E))
+            enabled = !enabled;
+
+        if(enabled)
+        {
+            Apply();
+        }
     }
 
     void Apply()
