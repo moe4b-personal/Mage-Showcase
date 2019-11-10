@@ -377,6 +377,48 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!206 &-3756252713213776959
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Aim Motion
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 288db927274a2e548a32be3e0cb4c4a5,
+      type: 3}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Movement
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 6989397504a419545829668ba8d2a4cb,
+      type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Movement
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 22374412bb1e8c346926e4e8475506ee,
+      type: 3}
+    m_Threshold: 2
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Movement
+    m_Mirror: 0
+  m_BlendParameter: Movement
+  m_BlendParameterY: Movement
+  m_MinThreshold: 0
+  m_MaxThreshold: 2
+  m_UseAutomaticThresholds: 0
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!1101 &-3135973378449518742
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -485,6 +527,48 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!206 &-2552121669629875491
+BlendTree:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Standard Motion
+  m_Childs:
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 288db927274a2e548a32be3e0cb4c4a5,
+      type: 3}
+    m_Threshold: 0
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Movement
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 6989397504a419545829668ba8d2a4cb,
+      type: 3}
+    m_Threshold: 1
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Movement
+    m_Mirror: 0
+  - serializedVersion: 2
+    m_Motion: {fileID: -203655887218126122, guid: 22374412bb1e8c346926e4e8475506ee,
+      type: 3}
+    m_Threshold: 2
+    m_Position: {x: 0, y: 0}
+    m_TimeScale: 1
+    m_CycleOffset: 0
+    m_DirectBlendParameter: Movement
+    m_Mirror: 0
+  m_BlendParameter: Movement
+  m_BlendParameterY: Movement
+  m_MinThreshold: 0
+  m_MaxThreshold: 2
+  m_UseAutomaticThresholds: 0
+  m_NormalizedBlendValues: 0
+  m_BlendType: 0
 --- !u!206 &-1749151152874596473
 BlendTree:
   m_ObjectHideFlags: 3
@@ -640,8 +724,6 @@ MonoBehaviour:
   - target: 15
     angles: {x: 0, y: 0, z: -40}
   speed: 4
-  weight: 0
-  weightTarget: 0
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -704,10 +786,16 @@ AnimatorController:
     m_Name: Arms
     m_StateMachine: {fileID: 235144948705421613}
     m_Mask: {fileID: 31900000, guid: 68d3fb9e29f00d2419152ca9364a8176, type: 2}
-    m_Motions: []
+    m_Motions:
+    - serializedVersion: 2
+      m_State: {fileID: 546164405462377078}
+      m_Motion: {fileID: -2552121669629875491}
+    - serializedVersion: 2
+      m_State: {fileID: 2617332268930225181}
+      m_Motion: {fileID: -3756252713213776959}
     m_Behaviours: []
     m_BlendingMode: 0
-    m_SyncedLayerIndex: -1
+    m_SyncedLayerIndex: 0
     m_DefaultWeight: 1
     m_IKPass: 0
     m_SyncedLayerAffectsTiming: 0
@@ -810,8 +898,6 @@ MonoBehaviour:
   - target: 16
     angles: {x: 0, y: 0, z: -20}
   speed: 4
-  weight: 0
-  weightTarget: 0
 --- !u!1101 &1318710644265124073
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -910,8 +996,6 @@ MonoBehaviour:
   - target: 15
     angles: {x: 0, y: 0, z: -40}
   speed: 4
-  weight: 0
-  weightTarget: 0
 --- !u!1107 &2456244493526046494
 AnimatorStateMachine:
   serializedVersion: 5
@@ -983,8 +1067,6 @@ MonoBehaviour:
   - target: 16
     angles: {x: 0, y: 0, z: -20}
   speed: 4
-  weight: 0
-  weightTarget: 0
 --- !u!206 &3271154577479333409
 BlendTree:
   m_ObjectHideFlags: 3
