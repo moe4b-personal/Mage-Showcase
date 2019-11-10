@@ -43,6 +43,6 @@ public class CharacterAnimatorAim : Character.Module
     public void Set(Vector3 direction)
     {
         Animator.SetLookAtPosition(Head.position + direction);
-        Animator.SetLookAtWeight(Weight.Value, Weight.Value / 3f);
+        Animator.SetLookAtWeight(Weight.Value, Weight.Value / 2f);
     }
 }

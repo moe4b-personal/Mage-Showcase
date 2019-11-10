@@ -87,7 +87,7 @@ public class CharacterMovement : Character.Module
 
     private void Process()
     {
-        if(Character.Attack.Bool)
+        if(Character.Attack.AnimatorBoolParameter)
         {
 
         }

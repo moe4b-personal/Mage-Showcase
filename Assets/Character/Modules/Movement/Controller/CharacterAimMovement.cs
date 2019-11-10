@@ -38,6 +38,8 @@ public class CharacterAimMovement : CharacterMovement.Controller
 
         Rotation.Process(camera.AlignedForward, Rotation.Speed * 2f);
 
+        Sprint.Stop();
+
         ApplyVelocity(Animator.velocity);
     }
 

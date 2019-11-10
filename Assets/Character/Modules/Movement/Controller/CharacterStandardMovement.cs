@@ -23,6 +23,8 @@ public class CharacterStandardMovement : CharacterMovement.Controller
 
         Rotation.Process(Velocity);
 
+        Sprint.Process();
+
         ApplyVelocity(Animator.velocity);
     }
 }

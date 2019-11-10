@@ -10,27 +10,25 @@ public class CharacterMovementSprint : CharacterMovement.Module
     [SerializeField]
     float acceleration = 5f;
 
-    protected override void Init()
+    public void Process()
     {
-        base.Init();
-
-        Character.OnProcess += Process;
-    }
-
-    void Process()
-    {
-        void Calculate(float target, float delta)
-        {
-            Value = Mathf.MoveTowards(Value, target, delta * Time.deltaTime);
-        }
-
         if(Input.Sprint.Value)
         {
             Calculate(1f, acceleration);
         }
         else
         {
-            Calculate(0f, acceleration);
+            Stop();
         }
+    }
+
+    void Calculate(float target, float delta)
+    {
+        Value = Mathf.MoveTowards(Value, target, delta * Time.deltaTime);
+    }
+
+    public void Stop()
+    {
+        Calculate(0f, acceleration);
     }
 }

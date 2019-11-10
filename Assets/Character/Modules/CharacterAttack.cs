@@ -26,13 +26,17 @@ public class CharacterAttack : Character.Module
     private void EventCallback(string ID)
     {
         if (ID == "Attack Connected") Connected();
+
+        if (ID == "Attack End") End();
     }
 
     public bool CanPerform
     {
         get
         {
-            if (Bool) return false;
+            if (AnimatorBoolParameter) return false;
+
+            if (coroutine != null) return false;
 
             if (MagicalSpells.Count == 0) return false;
 
@@ -40,7 +44,7 @@ public class CharacterAttack : Character.Module
         }
     }
 
-    public bool Bool
+    public bool AnimatorBoolParameter
     {
         get
         {
@@ -52,17 +56,19 @@ public class CharacterAttack : Character.Module
         }
     }
 
+    Coroutine coroutine;
+
     private void Process()
     {
         if(Input.Attack.Value)
         {
             if(CanPerform)
             {
-                Bool = true;
+                AnimatorBoolParameter = true;
             }
         }
 
-        if(Bool)
+        if(AnimatorBoolParameter)
         {
 
         }
@@ -75,7 +81,7 @@ public class CharacterAttack : Character.Module
 
         IEnumerator Procedure()
         {
-            while (MagicalSpells.Count > 0)
+            while (Input.Attack.Value && MagicalSpells.Count > 0)
             {
                 var timer = 0.75f;
 
@@ -90,16 +96,16 @@ public class CharacterAttack : Character.Module
 
                 if (Input.Attack.Value)
                     Launch();
-                else
-                    break;
             }
 
-            yield return new WaitForSeconds(0.5f);
+            Stop();
 
-            End();
+            bool HasEnded() => coroutine == null;
+
+            yield return new WaitUntil(HasEnded);
         }
 
-        StartCoroutine(Procedure());
+        coroutine = StartCoroutine(Procedure());
 
         OnConnected?.Invoke();
     }
@@ -120,10 +126,21 @@ public class CharacterAttack : Character.Module
         spell.Launch(direction * 20);
     }
 
+    public event Action OnStop;
+    void Stop()
+    {
+        AnimatorBoolParameter = false;
+
+        OnStop?.Invoke();
+    }
+
     public event Action OnEnd;
     void End()
     {
-        Bool = false;
+        if(coroutine != null)
+            StopCoroutine(coroutine);
+
+        coroutine = null;
 
         OnEnd?.Invoke();
     }

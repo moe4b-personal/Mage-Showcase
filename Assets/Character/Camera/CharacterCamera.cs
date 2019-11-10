@@ -54,8 +54,12 @@ public class CharacterCamera : Character.Module
     {
         transform.position = Character.Position;
 
-        pivot.eulerAngles += Vector3.up * Input.Look.X.Value * sensitivity * Time.deltaTime;
-        pivot.eulerAngles += Vector3.right * -Input.Look.Y.Value * sensitivity * Time.deltaTime;
+        var angles = pivot.eulerAngles;
+
+        angles.y += Input.Look.X.Value * sensitivity * Time.deltaTime;
+        angles += Vector3.right * -Input.Look.Y.Value * sensitivity * Time.deltaTime;
+
+        pivot.eulerAngles = angles;
     }
 }
 #pragma warning restore CS0108 // Member hides inherited member; missing new keyword
