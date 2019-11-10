@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: e7aef62b210353445af05656e4638fdd
+guid: ade7c9350bf468c46af79d27a2193f7c
 ModelImporter:
   serializedVersion: 26
   internalIDToNameTable:
   - first:
-      74: -203655887218126122
-    second: mixamo.com
+      74: -135952331956449747
+    second: Main
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -25,7 +25,7 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
+    importConstraints: 1
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -35,11 +35,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Mage Run
-      takeName: mixamo.com
-      internalID: -203655887218126122
+      name: Sword And Shield Attack - Idle
+      takeName: Main
+      internalID: -135952331956449747
       firstFrame: 0
-      lastFrame: 42
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
