@@ -12,9 +12,9 @@ public class CharacterMovementSprint : CharacterMovement.Module
 
     public void Process()
     {
-        if(Input.Sprint.Value)
+        if(Input.Sprint.Value > 0f)
         {
-            Calculate(1f, acceleration);
+            Calculate(Input.Sprint.Value, acceleration);
         }
         else
         {

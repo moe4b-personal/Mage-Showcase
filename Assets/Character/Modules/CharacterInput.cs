@@ -18,8 +18,8 @@ public class CharacterInput : Character.Module
     public ButtonInput Jump => jump;
 
     [SerializeField]
-    ButtonInput sprint = new ButtonInput(nameof(Sprint));
-    public ButtonInput Sprint => sprint;
+    AxisInput sprint = new AxisInput(nameof(Sprint));
+    public AxisInput Sprint => sprint;
 
     [SerializeField]
     ButtonInput aim = new ButtonInput(nameof(Aim));
