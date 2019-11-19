@@ -70,6 +70,8 @@ public class CharacterMovement : Character.Module
 
     public CharacterCamera camera => Character.camera;
 
+    public Vector3 Velocity => Vector3.Scale(rigidbody.velocity, Vector3.forward + Vector3.right);
+
     public override void Configure(Character character)
     {
         base.Configure(character);

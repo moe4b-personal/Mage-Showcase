@@ -10,15 +10,25 @@ public class CharacterMovementSprint : CharacterMovement.Module
     [SerializeField]
     float acceleration = 5f;
 
+    public bool CanAccelerate
+    {
+        get
+        {
+            if (Input.Sprint.Value == 0f) return false;
+
+            return true;
+        }
+    }
+
     public void Process()
     {
-        if(Input.Sprint.Value > 0f)
+        if(CanAccelerate)
         {
-            Calculate(Input.Sprint.Value, acceleration);
+            Acccelerate();
         }
         else
         {
-            Stop();
+            Halt();
         }
     }
 
@@ -27,7 +37,12 @@ public class CharacterMovementSprint : CharacterMovement.Module
         Value = Mathf.MoveTowards(Value, target, delta * Time.deltaTime);
     }
 
-    public void Stop()
+    public void Acccelerate()
+    {
+        Calculate(Input.Sprint.Value, acceleration);
+    }
+
+    public void Halt()
     {
         Calculate(0f, acceleration);
     }

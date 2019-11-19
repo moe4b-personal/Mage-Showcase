@@ -38,7 +38,7 @@ public class CharacterAimMovement : CharacterMovement.Controller
 
         Rotation.Process(camera.AlignedForward, Rotation.Speed * 2f);
 
-        Sprint.Stop();
+        Sprint.Halt();
 
         ApplyVelocity(Animator.velocity);
     }
